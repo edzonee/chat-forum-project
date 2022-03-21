@@ -1,0 +1,30 @@
+* {
+  font-family: "Courier New", Courier, monospace;
+}
+body {
+  background-color: rgb(17, 17, 17);
+}
+h1 {
+  color: rgb(153, 255, 0);
+}
+#main {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+#name,
+input {
+  margin: 5px;
+}
+button {
+  width: 60x;
+  color: rgb(153, 255, 0);
+  background-color: darkgreen;
+  border: none;
+  height: 20px;
+  border-radius: 10px;
+}
+
+textarea {
+  resize: none;
+}
