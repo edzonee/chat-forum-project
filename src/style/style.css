@@ -28,3 +28,9 @@ button {
 textarea {
   resize: none;
 }
+
+#databaseinfo,
+p {
+  color: rgb(153, 255, 0);
+}
+
