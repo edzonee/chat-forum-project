@@ -1,5 +1,21 @@
-# WARNING
+# Chat app project
 
-### Use this [link](https://edzonee.github.io/chat-forum-project/?) instead
+### Install
+~~~~
+npm install
+~~~~
 
-### GitHub pages is buggy at the moment
+### Run application
+~~~~
+npm run dev
+~~~~
+
+### Install docs folder
+~~~~
+npm run build
+~~~~
+
+### Make a clean run
+~~~~
+npm run clean
+~~~~
