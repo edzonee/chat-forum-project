@@ -1,3 +1,5 @@
+import { get, ref, remove, child, DataSnapshot } from "firebase/database";
+import { db } from "./firebaseApp";
 export class App {
   id: string;
   msg: string;
@@ -9,27 +11,40 @@ export class App {
   ) {
     this.printUserInfo();
   }
-  public getUserId(): string {
-    return (this.id = this.userId);
-  }
-  public getUserMsg(): string {
-    return (this.msg = this.userMsg);
-  }
-
   public printUserInfo(): void {
     const userName: HTMLParagraphElement = document.createElement("p");
+    const removeBtn: HTMLButtonElement = document.createElement("button");
+    removeBtn.setAttribute("value", this.commentId);
+    const userInfo: HTMLInputElement =
+      document.querySelector("#database-comments");
+    removeBtn.innerText = "X";
+    userInfo.append(removeBtn);
+
+    removeBtn.addEventListener("click", (e) => {
+      const test: HTMLInputElement = document.querySelector("#userNameInput");
+
+      get(child(ref(db), `userInfo/${this.commentId}`)).then(
+        (snapshot: DataSnapshot): void => {
+          if (snapshot.exists()) {
+            if (test.value == snapshot.val().userId) {
+              const taskRef = ref(db, "/userInfo/" + this.commentId);
+              remove(taskRef);
+            }
+          }
+        }
+      );
+    });
     userName.id = this.commentId;
     userName.innerText =
       this.timeStamp + ` User name: ${this.userId}, Message: ${this.userMsg}`;
     const userdiv: HTMLDivElement =
       document.querySelector("#database-comments");
     userdiv.appendChild(userName);
-
-    /* nst userMessage: HTMLParagraphElement = document.createElement("p");
-    document.body.appendChild(userMessage);
-    userMessage.innerText = "Message: "; */
   }
   public removeMessage(): void {
     document.querySelector(`#${this.commentId}`).remove();
+  }
+  public removeDomElement(): void {
+    document.querySelector(`#${this.id}`).remove();
   }
 }

@@ -3,14 +3,17 @@ export class CreateElements {
   constructor(public div: void) {
     this.div = div;
   }
-  makeElements(): void {
+  public makeElements(): void {
     this.createDiv = document.createElement("div");
     this.createDiv.setAttribute("id", "main");
     document.body.append(this.createDiv);
+    this.createDiv.style.justifyContent = "center";
+    this.createDiv.style.alignItems = "center";
 
     const h1: HTMLHeadElement = document.createElement("h1");
     this.createDiv.appendChild(h1);
-    h1.innerText = "Please write your name </>";
+    h1.setAttribute("id", "title");
+    h1.innerText = "Welcome. Write your name </>";
 
     document.querySelector("main");
     const form: HTMLFormElement = document.createElement("form");
@@ -23,40 +26,60 @@ export class CreateElements {
     form.appendChild(input).placeholder = "Enter you name";
 
     document.querySelector("main");
-    const btn: HTMLButtonElement = document.createElement("button");
-    btn.setAttribute("id", "submit");
-    form.appendChild(btn);
-    btn.innerText = "Sumbit";
-
+    const nameBtn: HTMLButtonElement = document.createElement("button");
+    nameBtn.setAttribute("id", "submitName");
+    form.appendChild(nameBtn);
+    nameBtn.innerText = "Enter name";
 
     const secondDiv: HTMLDivElement = document.createElement("div");
-    secondDiv.setAttribute("id", "messsageForm");
+    secondDiv.setAttribute("id", "messageForm");
     this.createDiv.appendChild(secondDiv);
-/*     secondDiv.style.display = 'none' */
+    secondDiv.style.display = "none";
 
     document.querySelector("messageForm");
     const messageInput: HTMLTextAreaElement =
       document.createElement("textarea");
     secondDiv.appendChild(messageInput).placeholder = "Write your message";
     messageInput.setAttribute("id", "userMessageInput");
-    messageInput.style.height = "250px";
+    messageInput.style.height = "150px";
     messageInput.style.width = "500px";
-/*     messageInput.style.display = 'none' */
 
     const databaseInfo: HTMLDivElement = document.createElement("div");
     databaseInfo.setAttribute("id", "databaseInfo");
-    document.body.append(databaseInfo);
+    this.createDiv.append(databaseInfo);
     databaseInfo.style.textAlign = "center";
-/*     databaseInfo.style.display = 'none' */
+    databaseInfo.style.display = "none";
 
     const databaseNames: HTMLParagraphElement = document.createElement("p");
     databaseNames.setAttribute("id", "database-comments");
+    databaseNames.setAttribute("value", "database-comments");
     databaseInfo.appendChild(databaseNames);
-    databaseInfo.style.border = '2px solid rgb(153, 255, 0)'
-    databaseInfo.style.margin = '2rem'
 
-    /*   const databaseMessages: HTMLParagraphElement = document.createElement("p");
-    databaseMessages.setAttribute("id", "user-msg");
-    databaseInfo.appendChild(databaseMessages); */
+    databaseInfo.style.border = "1px solid rgb(153, 255, 0)";
+    databaseInfo.style.margin = "2rem";
+    databaseInfo.style.height = "500px";
+    databaseInfo.style.width = "750px";
+    databaseInfo.style.textAlign = "center";
+    databaseInfo.style.overflowY = "scroll";
+  }
+
+  public changeElements(): void {
+    const nameBtn: HTMLElement = document.getElementById("submitName");
+    nameBtn.innerText = "Submit";
+
+    const userInput: HTMLInputElement =
+      document.querySelector("#userNameInput");
+    const changeTitle: HTMLElement = document.getElementById("title");
+    changeTitle.innerText = `Welcome ${userInput.value}. Write your message below...`;
+
+    const form: HTMLElement = document.getElementById("messageForm");
+    form.style.display = "block";
+
+    const databaseInfo: HTMLElement = document.getElementById("databaseInfo");
+    databaseInfo.style.display = "block";
+  }
+  public plsWriteName(): void {
+    const writeName: HTMLElement = document.getElementById("title");
+    writeName.innerText = "Please write your name...";
   }
 }

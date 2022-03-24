@@ -11,8 +11,6 @@ let names: App[] = [];
 
 onValue(dbRef, (snapshot) => {
   const newUserInfo = snapshot.val();
-  console.log(snapshot);
-  console.log(newUserInfo);
 
   document.querySelector("#database-comments").innerHTML = "";
   names = [];
@@ -29,15 +27,16 @@ onValue(dbRef, (snapshot) => {
   }
 });
 
-document.querySelector("#submit").addEventListener("click", (e) => {
+document.querySelector("#nameInfo").addEventListener("submit", (e) => {
   e.preventDefault();
 
   const userInput: HTMLInputElement = document.querySelector("#userNameInput");
   const messageInput: HTMLInputElement =
     document.querySelector("#userMessageInput");
-  if (userInput.value == "" || messageInput.value == "")
-    console.log("Fill in all boxes!");
-  else {
+  if (userInput.value == "") {
+    new CreateElements().plsWriteName();
+  } else {
+    new CreateElements().changeElements();
     const date = new Date();
     const addUser = {
       userId: (document.querySelector("#userNameInput") as HTMLInputElement)
@@ -57,32 +56,17 @@ document.querySelector("#submit").addEventListener("click", (e) => {
         ":",
     };
 
-    /* om namnet inte != name */
-    let removeBtn: HTMLButtonElement = document.createElement("button");
-    removeBtn.value = userInput.value;
-    if (userInput.value != userInput.value) {
-      removeBtn.style.display = "none";
+    if (messageInput.value != "") {
+      const newKey: string = push(dbRef).key;
+      const newUser = {};
+      newUser[newKey] = addUser;
+
+      update(dbRef, newUser);
     }
-
-    const newKey: string = push(dbRef).key;
-    const newUser = {};
-    newUser[newKey] = addUser;
-
-    update(dbRef, newUser);
   }
+  /* Prevents database from getting more than 25 objects */
   if (names.length > 24) {
-    console.log("Now its more than 25");
-    console.log("number of posts", names.length);
-    console.log("first post", names[0]);
     const removeFirstEl = ref(db, "/userInfo/" + names[0].commentId);
     remove(removeFirstEl);
   }
-
-  /*  if (userInput != null) {
-    const form: HTMLInputElement = document.querySelector("#messageForm");
-    const info: HTMLInputElement = document.querySelector("#databaseInfo");
-
-    form.style.display = 'block'
-    info.style.display = 'block'
-  } */
 });
